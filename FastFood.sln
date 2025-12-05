@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFood", "FastFood\FastFood.csproj", "{A19158A6-4800-4230-A08D-BCEA24187037}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://cash24.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = FastFood\\FastFood.csproj
+		SccProjectName1 = FastFood
+		SccLocalPath1 = FastFood
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A19158A6-4800-4230-A08D-BCEA24187037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A19158A6-4800-4230-A08D-BCEA24187037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A19158A6-4800-4230-A08D-BCEA24187037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A19158A6-4800-4230-A08D-BCEA24187037}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
