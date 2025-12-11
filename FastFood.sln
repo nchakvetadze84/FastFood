@@ -1,18 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastFood", "FastFood\FastFood.csproj", "{A19158A6-4800-4230-A08D-BCEA24187037}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EfCoreExample", "EfCoreExample", "{C5ED5843-96C0-43D1-86F0-1105CC51CCB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "EfCoreExample\Api\Api.csproj", "{45529C4B-5575-BC4E-E783-558E2FA76923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfCoreProject", "EfCoreExample\EfCoreProject\EfCoreProject.csproj", "{74F0BC8B-3ACB-E75A-5789-DABEF2B749CE}"
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 2
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://cash24.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = FastFood\\FastFood.csproj
-		SccProjectName1 = FastFood
-		SccLocalPath1 = FastFood
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -22,8 +21,23 @@ Global
 		{A19158A6-4800-4230-A08D-BCEA24187037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A19158A6-4800-4230-A08D-BCEA24187037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A19158A6-4800-4230-A08D-BCEA24187037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45529C4B-5575-BC4E-E783-558E2FA76923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45529C4B-5575-BC4E-E783-558E2FA76923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45529C4B-5575-BC4E-E783-558E2FA76923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45529C4B-5575-BC4E-E783-558E2FA76923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74F0BC8B-3ACB-E75A-5789-DABEF2B749CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74F0BC8B-3ACB-E75A-5789-DABEF2B749CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74F0BC8B-3ACB-E75A-5789-DABEF2B749CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74F0BC8B-3ACB-E75A-5789-DABEF2B749CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{45529C4B-5575-BC4E-E783-558E2FA76923} = {C5ED5843-96C0-43D1-86F0-1105CC51CCB5}
+		{74F0BC8B-3ACB-E75A-5789-DABEF2B749CE} = {C5ED5843-96C0-43D1-86F0-1105CC51CCB5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB36A26D-38E4-4309-9F32-33323F730B14}
 	EndGlobalSection
 EndGlobal
