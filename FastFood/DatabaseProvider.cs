@@ -229,6 +229,10 @@ namespace FastFood
                             rk.SetValue("DatabaseType", "SqlServer");
                         }
 
+                        RegistryKey rk1 = Registry.CurrentUser.CreateSubKey("Connection");
+                        rk1.SetValue("ConnectionString", "Host=localhost;Port=5432;Database=FastFood;Username=postgres;Password=tg207701");
+                        rk1.SetValue("DatabaseType", "PostgreSql");
+
                         string connStr = (string)rk.GetValue("ConnectionString");
                         string dbTypeStr = (string)rk.GetValue("DatabaseType") ?? "SqlServer";
                         

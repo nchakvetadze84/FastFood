@@ -28,8 +28,9 @@ namespace FastFood
 
         private void LoginForm_Load(object sender, EventArgs e)
         {
-            cbUsers.DataSource = DBObject.InvokeTString("SELECT [USER_NAME] FROM  [dbo].[Users]");
+            //cbUsers.DataSource = DBObject.InvokeTString("SELECT [USER_NAME] FROM  [dbo].[Users]");
 
+            cbUsers.DataSource = DBObjectNew.InvokeTString("SELECT * FROM Users");
             int j = 0;
             while (j < 11)
             {
