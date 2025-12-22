@@ -1,0 +1,7 @@
+LOAD DATABASE
+     FROM mssql://sa:YourStrong!Passw0rd@host.docker.internal:64529/FastFood
+     INTO postgresql://postgres:postgres@host.docker.internal:5432/FastFood
+
+ WITH quote identifiers
+
+ CAST type bit to smallint drop typemod;
