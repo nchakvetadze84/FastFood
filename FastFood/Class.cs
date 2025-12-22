@@ -97,7 +97,7 @@ namespace FastFood
 
         public Menu(int menuID)
         {
-            DataTable table = DBObject.InvokeTString("SELECT ID, Name_GE, Name_EN, Price, Status, Categorie_ID, Menu_Type_ID FROM Menu where ID  = " + menuID.ToString());
+            DataTable table = DBObjectNew.InvokeTString("SELECT [ID], [Name_GE], [Name_EN], [Price], [Status], [Categorie_ID], [Menu_Type_ID] FROM [dbo].[Menu] where [ID] = " + menuID.ToString());
             m_Id = menuID;
             m_Name = table.Rows[0]["Name_GE"].ToString();
             m_NameEn = table.Rows[0]["Name_EN"].ToString();

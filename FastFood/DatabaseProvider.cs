@@ -131,6 +131,14 @@ namespace FastFood
             // 9. CONVERT/CAST syntax adjustments
             result = ConvertCastSyntax(result);
 
+            // 10. [dbo].[Table] -> dbo.table
+            result = System.Text.RegularExpressions.Regex.Replace(
+                result, @"\[([^\s\]]+)\]", m => "\"" + m.Groups[1].Value + "\"");
+
+            // 11. replace 'select @@IDENTITY' with 'RETURNING "ID"'
+            result = System.Text.RegularExpressions.Regex.Replace(
+                result, @";?\s*select\s+@@IDENTITY", " RETURNING \"ID\"", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
             return result;
         }
 
@@ -232,6 +240,11 @@ namespace FastFood
                         RegistryKey rk1 = Registry.CurrentUser.CreateSubKey("Connection");
                         rk1.SetValue("ConnectionString", "Host=localhost;Port=5432;Database=FastFood;Username=postgres;Password=tg207701");
                         rk1.SetValue("DatabaseType", "PostgreSql");
+                        //rk1.SetValue("ConnectionString", "Host=localhost;Port=5432;Database=FastFood;Username=postgres;Password=postgres");
+                        //rk1.SetValue("DatabaseType", "PostgreSql");
+                        //rk1.SetValue("ConnectionString", "Server=(localdb)\\mssqllocaldb;Database=FastFood;Initial Catalog=FastFood;Trusted_Connection=True;Integrated Security=True");
+                        //rk1.SetValue("ConnectionString", "Server=localhost,64529;Database=FastFood;User Id=sa;Password=YourStrong!Passw0rd;");
+                        //rk1.SetValue("DatabaseType", "SqlServer");
 
                         string connStr = (string)rk.GetValue("ConnectionString");
                         string dbTypeStr = (string)rk.GetValue("DatabaseType") ?? "SqlServer";
@@ -279,6 +292,8 @@ namespace FastFood
                 if (!string.IsNullOrEmpty(order)) sql += " ORDER BY " + order;
             }
 
+            var pgsql = SqlNormalizer.Normalize(sql, DatabaseType.PostgreSql);
+
             using (var connection = provider.CreateConnection())
             using (var cmd = provider.CreateCommand(sql, connection))
             {
@@ -304,7 +319,7 @@ namespace FastFood
             {
                 if (kvp.Value != null)
                 {
-                    insertString += kvp.Key + ", ";
+                    insertString += $"[{kvp.Key}]" + ", ";
                     valueString += "@" + kvp.Key + ", ";
                     parameters.Add(provider.CreateParameter("@" + kvp.Key, kvp.Value));
                 }
@@ -313,6 +328,8 @@ namespace FastFood
             insertString = insertString.TrimEnd(',', ' ') + ")";
             valueString = valueString.TrimEnd(',', ' ') + ")";
             string sql = insertString + " " + valueString;
+
+            var pgsql = SqlNormalizer.Normalize(sql, DatabaseType.PostgreSql);
 
             using (var connection = provider.CreateConnection())
             using (var cmd = provider.CreateCommand(sql, connection))
@@ -337,13 +354,15 @@ namespace FastFood
             {
                 if (kvp.Value != null)
                 {
-                    sql += kvp.Key + " = @" + kvp.Key + ", ";
+                    sql += $"[{kvp.Key}]" + " = @" + kvp.Key + ", ";
                     parameters.Add(provider.CreateParameter("@" + kvp.Key, kvp.Value));
                 }
             }
 
-            sql = sql.TrimEnd(',', ' ') + " WHERE ID = @id";
+            sql = sql.TrimEnd(',', ' ') + " WHERE [ID] = @id";
             parameters.Add(provider.CreateParameter("@id", id));
+
+            var pgsql = SqlNormalizer.Normalize(sql, DatabaseType.PostgreSql);
 
             using (var connection = provider.CreateConnection())
             using (var cmd = provider.CreateCommand(sql, connection))
@@ -360,7 +379,9 @@ namespace FastFood
         public void Delete(int id)
         {
             var provider = GetProvider();
-            string sql = "DELETE FROM " + m_table + " WHERE ID = @id";
+            string sql = "DELETE FROM " + m_table + " WHERE [ID] = @id";
+
+            var pgsql = SqlNormalizer.Normalize(sql, DatabaseType.PostgreSql);
 
             using (var connection = provider.CreateConnection())
             using (var cmd = provider.CreateCommand(sql, connection))
@@ -378,6 +399,8 @@ namespace FastFood
         {
             var provider = GetProvider();
 
+            var pgsql = SqlNormalizer.Normalize(sqlString, DatabaseType.PostgreSql);
+
             using (var connection = provider.CreateConnection())
             using (var cmd = provider.CreateCommand(sqlString, connection))
             {
@@ -392,6 +415,8 @@ namespace FastFood
         public static DataTable InvokeTString(string sqlString)
         {
             var provider = GetProvider();
+
+            var pgsql = SqlNormalizer.Normalize(sqlString, DatabaseType.PostgreSql);
 
             using (var connection = provider.CreateConnection())
             using (var cmd = provider.CreateCommand(sqlString, connection))

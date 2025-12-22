@@ -11,7 +11,7 @@ namespace FastFood
     {
         public static int CheckPass(string user, string password) //returns UserID
         {
-            int id = Convert.ToInt32(DBObject.InvokeString("SELECT ID FROM dbo.Users WHERE USER_NAME = '" + user + "' AND USER_PASSWORD = '"+password+"'"));
+            int id = Convert.ToInt32(DBObjectNew.InvokeString("SELECT [ID] FROM [dbo].[Users] WHERE [USER_NAME] = '" + user + "' AND [USER_PASSWORD] = '"+password+"'"));
             
             //cmd.Parameters.Add("@LoginName", SqlDbType.VarChar, 20);
             //cmd.Parameters["@LoginName"].Value = user;

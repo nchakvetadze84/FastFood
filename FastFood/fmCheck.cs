@@ -163,7 +163,8 @@ namespace FastFood
                 {
                     s += oi.Menu.Id.ToString() + "," + oi.Quantity.ToString() + ";";
                 }
-                decimal d = Convert.ToDecimal(DBObject.InvokeString("select dbo.REEVALUATE_ORDER_COST_PRICE('" + s + "')"));
+                // TODO: procedures and functions are not transfered by pgloader
+                decimal d = Convert.ToDecimal(DBObjectNew.InvokeString("select dbo.REEVALUATE_ORDER_COST_PRICE('" + s + "')"));
                 teSaleAmount.Text = d.ToString();
                 return;
             }
@@ -204,20 +205,20 @@ namespace FastFood
                 }
                 Dictionary<string, object> param = new Dictionary<string, object>();
                 // Edit Order
-                DBObject dbObject = new DBObject("[Orders]", "");
+                DBObjectNew dbObject = new DBObjectNew("[dbo].[Orders]", "");
                 param.Add("PrintTime", DateTime.Now.ToLongTimeString());
-                param.Add("AmountIn", teReciveAmount.Text);
-                param.Add("SumPrice", teAmount.Text);
+                param.Add("AmountIn", decimal.Parse(teReciveAmount.Text));
+                param.Add("SumPrice", decimal.Parse(teAmount.Text));
                 param.Add("Sale", cbSale.Text.Substring(0, cbSale.Text.Length - 1));
-                param.Add("SumPriceWithSale", teSaleAmount.Text);
+                param.Add("SumPriceWithSale", decimal.Parse(teSaleAmount.Text));
                 param.Add("PayForm", cbPayForm.SelectedIndex + 1);
-                param.Add("Complited", "TRUE");
+                param.Add("Complited", 1);
                 dbObject.Update(m_Order.ID, param);
 
                 param.Clear();
 
                 // save
-                DBObject dbDetails = new DBObject("Order_Details", "");
+                DBObjectNew dbDetails = new DBObjectNew("[dbo].[Order_Details]", "");
 
                 foreach (OrderItem oi in m_Order.OrderList)
                 {
@@ -231,7 +232,7 @@ namespace FastFood
 
                 Globals.Language = rbGeo.Checked ? "ka" : "en";
                 PrintDocument printDocument1 = new PrintDocument();
-                printDocument1.PrinterSettings.PrinterName = Convert.ToString(DBObject.InvokeString("SELECT Printer FROM Menu_Types WHERE (Name_GE = N'ბარი')"));
+                printDocument1.PrinterSettings.PrinterName = Convert.ToString(DBObjectNew.InvokeString("SELECT [Printer] FROM [dbo].[Menu_Types] WHERE ([Name_GE] = N'ბარი')"));
                 printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
                 if (printDocument1.PrinterSettings.IsValid)
                 {
@@ -239,7 +240,7 @@ namespace FastFood
                     printDocument1.Print();
                 }
 
-                DBObject tmpdbo = new DBObject("[Order_Details_tmp]", "");
+                DBObjectNew tmpdbo = new DBObjectNew("[dbo].[Order_Details_tmp]", "");
                 tmpdbo.Delete(m_Order.ID);
 
                 DialogResult = DialogResult.OK;
